@@ -80,4 +80,16 @@ class ExhibitionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_exhibition
+      @exhibition = Exhibition.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def exhibition_params
+      params.require(:exhibition).permit(:title, :image, :date, :description)
+    end
+
 end
