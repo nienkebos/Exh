@@ -1,93 +1,56 @@
 class ArtworksController < ApplicationController
-  # GET /products
-  # GET /products.json
-  def index
-    @artworks = Artwork.all
+    before_action :load_artwork, except: [:index, :create]
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @artworks }
+    def index
+      @artworks = Artwork.all
+      render json: @artworks
     end
-  end
 
-  # GET /products/1
-  # GET /products/1.json
-  def show
-    @artwork = Artwork.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @artwork }
+    def show
+      render_todo
     end
-  end
 
-  # GET /products/new
-  # GET /products/new.json
-  def new
-    @artwork = Artwork.new
+    def create
+      @artwork = Artwork.new(artwork_params)
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @artwork }
-    end
-  end
-
-  # GET /products/1/edit
-  def edit
-    @artwork = Artwork.find(params[:id])
-  end
-
-  # POST /products
-  # POST /products.json
-  def create
-    @artwork = Artwork.new(params[:artwork])
-
-    respond_to do |format|
       if @artwork.save
-        format.html { redirect_to @artwork, notice: 'Artwork was successfully created.' }
-        format.json { render json: @artwork, status: :created, location: @artwork }
+        render_artwork status: :created
       else
-        format.html { render action: "new" }
-        format.json { render json: @artwork.errors, status: :unprocessable_entity }
+        render_errors
       end
     end
-  end
 
-  # PUT /products/1
-  # PUT /products/1.json
-  def update
-    @artwork = Artwork.find(params[:id])
-
-    respond_to do |format|
-      if @artwork.update_attributes(params[:artwork])
-        format.html { redirect_to @artwork, notice: 'Artwork was successfully updated.' }
-        format.json { head :no_content }
+    def update
+      if @artwork.update(artwork_params)
+        render_artwork status: 226
       else
-        format.html { render action: "edit" }
-        format.json { render json: @artwork.errors, status: :unprocessable_entity }
+        render_errors
       end
     end
-  end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
-  def destroy
-    @artwork = Artwork.find(params[:id])
-    @artwork.destroy
-
-    respond_to do |format|
-      format.html { redirect_to artworks_url }
-      format.json { head :no_content }
+    def destroy
+      if @artwork.destroy
+        head :ok
+      else
+        render_errors "Could not destroy this artwork, sorry"
+      end
     end
-  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_artwork
+    def render_artwork(status: 200)
+      render json: @artwork, status: status
+    end
+
+
+    def render_errors(errors = nil)
+      errors ||= @artwork.errors
+      render json: { errors: errors }, status: :unprocessible_entity
+    end
+
+    def load_artwork
       @artwork = Artwork.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def artwork_params
       params.require(:artwork).permit(:artist, :title, :date, :technique, :image,  :description)
     end
