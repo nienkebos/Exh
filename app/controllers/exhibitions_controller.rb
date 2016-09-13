@@ -1,95 +1,55 @@
 class ExhibitionsController < ApplicationController
-  # GET /products
-  # GET /products.json
-  def index
-    @exhibitions = Exhibition.all
+    before_action :load_exhibition, except: [:index, :create]
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @exhibitions }
+    def index
+      @exhibitions = Exhibition.all
+      render json: @exhibitions
     end
-  end
 
-  # GET /products/1
-  # GET /products/1.json
-  def show
-    @exhibition = Exhibition.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @exhibition }
+    def show
+      render_todo
     end
-  end
 
-  # GET /products/new
-  # GET /products/new.json
-  def new
-    @exhibition = Exhibition.new
+    def create
+      @exhibition = Exhibition.new(exhibition_params)
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @exhibition }
-    end
-  end
-
-  # GET /products/1/edit
-  def edit
-    @exhibition = Exhibition.find(params[:id])
-  end
-
-  # POST /products
-  # POST /products.json
-  def create
-    @exhibition = Exhibition.new(params[:exhibition])
-
-    respond_to do |format|
       if @exhibition.save
-        format.html { redirect_to @exhibition, notice: 'Exhibition was successfully created.' }
-        format.json { render json: @exhibition, status: :created, location: @exhibition }
+        render_exhibition status: :created
       else
-        format.html { render action: "new" }
-        format.json { render json: @exhibition.errors, status: :unprocessable_entity }
+        render_errors
       end
     end
-  end
 
-  # PUT /products/1
-  # PUT /products/1.json
-  def update
-    @exhibition = Exhibition.find(params[:id])
-
-    respond_to do |format|
-      if @exhibition.update_attributes(params[:exhibition])
-        format.html { redirect_to @exhibition, notice: 'Artwork was successfully updated.' }
-        format.json { head :no_content }
+    def update
+      if @exhibition.update(exhibition_params)
+        render_exhibition status: 226
       else
-        format.html { render action: "edit" }
-        format.json { render json: @exhibition.errors, status: :unprocessable_entity }
+        render_errors
       end
     end
-  end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
-  def destroy
-    @exhibition = Exhibition.find(params[:id])
-    @exhibition.destroy
-
-    respond_to do |format|
-      format.html { redirect_to exhibitions_url }
-      format.json { head :no_content }
+    def destroy
+      if @exhibition.destroy
+        head :ok
+      else
+        render_errors "Could not destroy this exhibition, sorry"
+      end
     end
-  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_exhibition
-      @exhibition = Exhibition.find(params[:id])
+    def render_exhibition(status: 200)
+      render json: @exhibition, status: status
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def exhibition_params
       params.require(:exhibition).permit(:title, :image, :date, :description)
     end
 
+    def render_errors(errors = nil)
+      errors ||= @exhibition.errors
+      render json: { errors: errors }, status: :unprocessible_entity
+    end
+
+    def load_exhibition
+      @exhibition = Exhibition.find(params[:id])
+    end
 end
