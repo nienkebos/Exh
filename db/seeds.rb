@@ -84,7 +84,7 @@ Artwork.create({
   artist: 'Francis Bacon',
   title: 'Painting',
   date: '1946',
-  technique: 'Oil and pastel on linen', image:'http://www.moma.org/media/W1siZiIsIjE1MTEyNSJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDE0NDB4MTQ0MFx1MDAzZSJdXQ.jpg?sha=89cecb98eaf9d722',
+  technique: 'Oil and pastel on linen', image:'http://www.moma.org/media/W1siZiIsIjE1MTEyNSJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDE0NDB4MTQ0MFx1MDAzZSJdXQ.jpg',
   description: 'Created in the immediate aftermath of World War II, Painting is an oblique but damning image of an anonymous public figure. The umbrella that partially obscures him might refer to Neville Chamberlain, the prewar British prime minister who was known for carrying one. His dark suit—the unofficial uniform of British politicians of the day—is punctuated by an incongruous bright yellow boutonniére, yet his deathly complexion and toothy grimace suggest a deep brutality beneath his proper exterior.',
   exhibition: exhibition_francis })
 
@@ -92,7 +92,7 @@ Artwork.create({
   artist: 'Francis Bacon',
   title: 'Triptych',
   date: '1991',
-  technique: 'Oil on linen, three panels', image:'http://www.moma.org/media/W1siZiIsIjE2MTE0MiJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDE0NDB4MTQ0MFx1MDAzZSJdXQ.jpg?sha=c67606930b7af515',
+  technique: 'Oil on linen, three panels', image:'http://www.moma.org/media/W1siZiIsIjE2MTE0MiJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDE0NDB4MTQ0MFx1MDAzZSJdXQ.jpg',
   description: 'In Bacons final triptych, made at the end of his career, a composite figure steps in and out of stagelike spaces. Seemingly nailed to the canvas are closely cropped headshots of Bacons face, at right, and, at left, that of a Brazilian racecar driver, placed above muscular lower bodies.',
   exhibition: exhibition_francis })
 

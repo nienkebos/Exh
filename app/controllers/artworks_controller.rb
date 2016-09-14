@@ -1,17 +1,19 @@
 class ArtworksController < ApplicationController
+    before_action :load_exhibition
     before_action :load_artwork, except: [:index, :create]
 
     def index
-      @artworks = Artwork.all
+      @artworks = Artwork.where(exhibition_id: params[:exhibition_id])
       render json: @artworks
     end
 
     def show
-      render_todo
+      render_artwork
     end
 
     def create
       @artwork = Artwork.new(artwork_params)
+      @artwork.exhibition = @exhibition
 
       if @artwork.save
         render_artwork status: :created
@@ -41,10 +43,13 @@ class ArtworksController < ApplicationController
       render json: @artwork, status: status
     end
 
-
     def render_errors(errors = nil)
       errors ||= @artwork.errors
       render json: { errors: errors }, status: :unprocessible_entity
+    end
+
+    def load_exhibition
+      @exhibition = Exhibition.find(params[:exhibition_id])
     end
 
     def load_artwork
