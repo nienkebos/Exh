@@ -7,7 +7,7 @@ class ExhibitionsController < ApplicationController
     end
 
     def show
-      render_todo
+      render_exhibition
     end
 
     def create
