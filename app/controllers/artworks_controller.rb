@@ -4,7 +4,11 @@ class ArtworksController < ApplicationController
 
     def index
       @artworks = Artwork.where(exhibition_id: params[:exhibition_id])
-      render json: @artworks
+      @exhibition = Exhibition.find(params[:exhibition_id])
+      render json: {
+        artwork: @artworks,
+        exhibition: @exhibition,
+      }
     end
 
     def show
