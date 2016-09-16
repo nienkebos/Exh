@@ -22,7 +22,7 @@ Artwork.create({
   title: 'Als een vis in het water. Als een vis op het droge',
   date: '2015',
   technique: '',
-  image: open('https://thecreatorsproject-images.vice.com/content-images/contentimage/no-slug/6cac3b131bfc402a4dae6d28e83afa7c.jpg'),
+  image:  open('https://res.cloudinary.com/du6v0bsg5/image/upload/v1473973122/6cac3b131bfc402a4dae6d28e83afa7c_f5ohae.jpg'),
   description: '',
   exhibition: exhibition_bas})
 
